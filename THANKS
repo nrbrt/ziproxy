@@ -1,0 +1,40 @@
+Ziproxy project received miscellaneous contributions by a number of people,
+in the form of bug reports, suggestions, code donation and other.
+
+The names of the contributors are listed below.
+
+
+* Those acknowledged by Daniel Mealha Cabrita:
+
+Roman Korolyov who contributed with the proxy authentication code.
+Alex (from Ukraine) who contributed with a fix patch to gzip javascript files.
+Heiko Hund who fixed bugs on: zombie children, 30x HTTP responses.
+	(both pointed by Dimitrij Hilt) And added Nameservers option.
+Pankov Pavel who submitted a bugfix addressing 2.2.0 compilation under FreeBSD,
+	he also added support for custom 407/408 error pages.
+Artem S. Tashkinov who noticed and reported serious bugs when no one else did.
+Marcos Talau who created the manpages for ziproxy and ziproxylogtool.
+	He was also kind enough to put his whole network as a guinea pig for
+	large scale JP2k deployment, so we could fix some remaining bugs.
+Vadim S. Sabinich who translated Ziproxy documentation to Russian language.
+Francisco Maia Mourao who donated a PowerMac G3 so Ziproxy could be tested
+	in a non-x86 architecture.
+Ed Wildgoose who contributed with SASL authentication code.
+
+
+
+* Those acknowledged by Juraj Variny:
+
+Cheuk-san Edward Wang submitted countless valuable suggestions and bugfixes.
+
+Knute Johnson fixed unnecessary timeout despite ziproxy being busy.
+
+Dar Santos was the first one that made me think ziproxy is actually worth going 
+out.
+
+Mark MWP Williams created original mwp_proxy-1.0, ziproxy is directly descended 
+from it.
+
+
+(EOF)
+

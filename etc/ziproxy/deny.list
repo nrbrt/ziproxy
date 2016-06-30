@@ -1,0 +1,12 @@
+## Here one may define which URLs will should be blocked.
+## A "access denied" 403 error will be returned when trying to access
+## one of those URLs.
+#
+# This list will take effect only if enabled by the configuration option
+# URLDeny.
+#
+# Lines beginning with '#' are treated as comments and, as such, ignored.
+
+#http://*.porn.*/*
+#http://*.streaming.video.xyz/*
+

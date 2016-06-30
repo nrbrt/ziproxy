@@ -1,0 +1,47 @@
+Ziproxy Log Tools
+-----------------
+
+
+Ziproxy includes the following tools for analysing its access logs:
+
+- ziproxylogtool (src/tools/ziproxylogtool, automatically installed)
+- ziproxy_genhtml_stats.sh (src/tools/ziproxy_genhtml_stats.sh, not automatically installed)
+
+
+
+QUICK WAY (for the ones who can't wait)
+---------------------------------------
+
+Make sure "ziproxylogtool" is installed.
+
+$ ./ziproxy_genhtml_stats.sh <logfile> > my_stats.html
+
+
+
+DESCRIPTION ON THE TOOLS
+------------------------
+
+"ziproxylogtool" is a low-level log analyser, its purpose is to be invoked by scripts.
+It is expected to be reasonably fast and generic.
+
+Examples:
+$ cat access.log | ziproxylogtool -mg > stats.txt
+$ ziproxylogtool -mh --bytes-out-min 1024 -i access.log -o stats.txt
+
+For more information on this:
+$ ziproxylogtool --help
+
+
+"ziproxy_genhtml_stats.sh" is a high-level, HTML-generating, log analyser.
+It's made in bash and uses ziproxylogtool.
+The idea is to provide it as an example, but it may be used as-is, and may be
+modified to suits better one's needs.
+
+Examples:
+$ ./ziproxy_genhtml_stats.sh access.log > pretty_http_stats.html
+$ ./ziproxy_genhtml_stats.sh access.log "My Company Inc. traffic" > even_prettier_http_stats.html
+
+
+
+
+(EOF)

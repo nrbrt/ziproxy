@@ -1,0 +1,12 @@
+# Here one may define which hosts as exempted from IP rotation
+# when using the BindOutgoing option.
+#
+# This list will take effect only if enabled by the configuration option
+# BindOutgoingExList.
+#
+# Lines beginning with '#' are treated as comments and, as such, ignored.
+
+#www.paranoidwebmail.com.aaa
+#srv*.xxaassdf.dfd
+#etc.etcetc.andso.etc
+

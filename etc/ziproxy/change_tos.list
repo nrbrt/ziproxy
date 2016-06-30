@@ -1,0 +1,12 @@
+# Here one may define which URLs are supposed to have their TOS
+# marked as 'differentiated'.
+#
+# This list will take effect only if enabled by the configuration option
+# TOSMarkAsDiffURL (and additional TOS-related options).
+#
+# Lines beginning with '#' are treated as comments and, as such, ignored.
+
+#http://mirror.blah.blah.example/*.iso
+#http://www.supervideos.example/videos/*
+#http://*.massivedownloads.xyz/*
+

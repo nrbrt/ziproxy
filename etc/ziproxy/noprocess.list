@@ -1,0 +1,13 @@
+# Here one may define which URLs are not supposed to be
+# processed by Ziproxy no matter which compression options are enabled.
+#
+# This list will take effect only if enabled by the configuration option
+# URLNoProcessing.
+#
+# Lines beginning with '#' are treated as comments and, as such, ignored.
+
+#http://www.superserver.xyz/php/horribly_broken.php
+#http://*.beeb.qwerty.dddd/cgi-bin/*
+#http://www.brokenhost.nana/*
+
+

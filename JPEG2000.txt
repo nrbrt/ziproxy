@@ -1,0 +1,88 @@
+JPEG2000 README for Ziproxy
+
+Daniel Mealha Cabrita - 2007/12/31
+
+Replaces the previous document by
+Juraj Variny
+
+
+
+This document intends only to be an overview on JPEG2000 and to be
+a minimal guide on Ziproxy's JPEG2000 support.
+Please refer to the README and/or the example ziproxy.conf for more details.
+
+
+About JPEG2000
+
+JPEG2000 is a image storage format which supports both lossy and
+lossless compression. Ziproxy supports that in lossy mode.
+The format supports some interesting features which JPEG does not,
+such as alpha channel, 16-bit component resolution etc.
+Also it uses a different algorithm to compress the pictures, one called
+"wavelet" compression.
+Basically, it is not simply an "upgrade" over JPEG, it's an entirely
+different format.
+
+Due to the different way it compresses the pictures, the result is
+not directly comparable to JPEG since (when in lossy mode)
+it degrade pictures in a different manner. The good points of it
+is there are no ringing effects like JPEG, nor "blocking" and the pictures
+are always smooth.
+
+The results are interesting and worth trying.
+
+
+
+Using JPEG2000 
+
+Firstly it's important to state that currently (Dec 2007) JPEG2000 support
+is not commonly found in web browsers. There are plugins that add such support
+but, to my knowledge, none of those provide more than very basic JPEG2000
+support (that means you won't get the best of that format that way).
+
+Currently, as far as I know, the only good www JPEG2000 support is the native one from
+the Konqueror web browser (tested with version 3.5.6).
+
+Still, there is a SECOND option, which is to run an instance of Ziproxy locally
+in order to recompress the pictures back to JPEG (with high quality settings
+in this case, of course).
+You'll need to set the local Ziproxy's options accordingly in order to do this.
+
+
+
+Fine tuning JPEG2000 compression
+
+I'm not going into details but, as a suggestion, if you want quality:
+
+- Use YUV as the colormodel.
+- Set subsampling for the components.
+  Subsampling is enabled with sensible defaults when you use YUV, but you may
+  want to fine tune it into more of your liking.
+
+
+
+"How do I enable Ziproxy's JPEG2000 support?"
+
+First, you need libjasper:
+http://www.ece.uvic.ca/~mdadams/jasper/
+
+Then is simply a matter of compiling Ziproxy with libjasper support:
+$ ./configure --with-jasper
+$ make
+
+
+
+Known limitations of Ziproxy's JPEG2000 support
+
+Incoming pictures:
+No 16-bit component support.
+No signed component support.
+
+Outgoing pictures:
+Max 8-bit component resolution.
+Component subsampling, with certain settings, may render a slightly
+smaller image (either a libjasper limitation or a JPEG2000 limitation).
+
+
+.end of document.
+

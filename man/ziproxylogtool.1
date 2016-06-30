@@ -1,0 +1,82 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH ZIPROXYLOGTOOL 1 "December 02, 2007" ZIPROXY ZIPROXY
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage-specific macros, see man(7)
+.SH NAME
+ziproxylogtool \- is a low-level log analyser
+.SH SYNOPSIS
+.B ziproxylogtool
+.B [general_options] [filtering_options]
+.SH DESCRIPTION
+.\" TeX users may be more comfortable with the \fB<whatever>\fP and
+.\" \fI<whatever>\fP escape sequences to invode bold face and italics, 
+.\" respectively.
+\fBziproxylogtool\fP is a low-level log analyser, its purpose is to be invoked by scripts.
+It is expected to be reasonably fast and generic.
+
+These programs follow the usual GNU command line syntax, with long
+options starting with two dashes (`-').
+A summary of options is included below.
+.SH GENERAL OPTIONS
+.TP
+\fB-m\fP, \fB--mode\fP mode
+Output mode:
+.nf
+"g" - Global stats
+"h" - Per host stats (accesses, in_bytes, out_bytes, compression %, hostname)
+"f" - Filter mode (filter log entries according to filtering options)
+.fi
+.TP
+\fB-i\fP, \fB--in-file\fP filename
+Input file (Ziproxy log file). If unspecified, uses stdin.
+.TP
+\fB-o\fP, \fB--out-file\fP filename
+Output file (stats output). If unspecified, uses stdout.
+.TP
+\fB-h\fP, \fB--help\fP
+Display summarized help
+.SH FILTERING OPTIONS
+If ommited, won't apply.
+.TP
+\fB-1\fP, \fB--epoch-min\fP unix_epoch
+Filter entries starting from that epoch.
+.TP
+\fB-2\fP, \fB--epoch-max\fP unix_epoch
+Filter entries older than that epoch.
+.TP
+\fB-3\fP, \fB--bytes-in-min\fP bytes
+Filter entries which incoming_bytes >= <bytes>
+.TP
+\fB-4\fP, \fB--bytes-in-max\fP bytes
+Filter entries which incoming_bytes < <bytes>
+.TP
+\fB-5\fP, \fB--bytes-out-min\fP bytes
+Filter entries which outgoing_bytes >= <bytes>
+.TP
+\fB-6\fP, \fB--bytes-out-max\fP bytes
+Filter entries which outgoing_bytes < <bytes>
+.TP
+\fB-7\fP, \fB--delay-min\fP mili_seconds
+Filter entries which delay >= <mili_seconds>
+.TP
+\fB-8\fP, \fB--delay-max\fP mili_seconds
+Filter entries which delay < <mili_seconds>
+.SH SEE ALSO
+.BR ziproxy(1)
+.SH AUTHOR
+ziproxylogtool was written by Daniel Mealha Cabrita.
+.PP
+This manual page was written by Marcos Talau <marcostalau@gmail.com>.

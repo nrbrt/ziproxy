@@ -1,0 +1,14 @@
+# Here one may define which URLs will have their data replaced
+# by another, while keeping the header data (mostly) intact.
+#
+# This list will take effect only if enabled by the configuration option
+# URLReplaceDataCT and will only affect content-types specified
+# in URLReplaceDataCTList.
+#
+# Lines beginning with '#' are treated as comments and, as such, ignored.
+
+#http://ads.aaaa.bb/*
+#http://*.advertisement.nonono/*
+#http://ad.xxx.yyy/image/*
+#http://qwe.rty.uiop/*.swf
+

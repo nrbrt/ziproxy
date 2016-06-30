@@ -1,0 +1,12 @@
+service ziproxy
+{
+	port			= 8080
+ 	socket_type		= stream
+ 	wait			= no
+ 	user			= root
+ 	server			= /usr/bin/ziproxy
+	server_args		= -i -c /etc/ziproxy/ziproxy.conf
+ 	log_on_success		+= USERID
+ 	log_on_failure		+= USERID
+ 	disable			= yes
+}

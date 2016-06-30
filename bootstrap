@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -x
+
+#if test "$1" = "--noclutter"; then
+#	aclocal -I config --output=config/aclocal.m4 &&
+#	autoheader -l config &&
+#	automake --foreign --add-missing --copy &&
+#	autoconf -l config
+#else
+	aclocal -I config &&
+	autoheader &&
+	automake --foreign --add-missing --copy &&
+	autoconf 
+#fi

@@ -1,0 +1,1061 @@
+3.12.2014 Daniel Mealha Cabrita
+	version 3.3.1
+	qparser.c configure.in:
+		Fixed strndup-related compiling problems.
+
+6.1.2013 Daniel Mealha Cabrita
+	version 3.3.0
+	image.c cfgfile.*:
+		Added option to remove alpha channel after
+		a specified average opacity threshold.
+		New option: AlphaRemovalMinAvgOpacity
+
+8.2.2012 Daniel Mealha Cabrita
+	version 3.2.1
+	image.c:
+		Fixed compilation issues with libpng 1.5.x.
+
+6.9.2010 Daniel Mealha Cabrita
+	version 3.2.0
+	auth.* cfgfile.* http.c sasl/ziproxy.conf:
+		Authentication system is now modular.
+		Added SASL authentication support.
+		New options: AuthMode, AuthSASLConfPath, AuthPasswdFile
+		Obsoleted option: PasswdFile
+	*.c *.h README CREDITS:
+		Updated source code and documentation to reflect the
+		license change (Juraj's code now being under 2-clause
+		BSD license).
+		Added more complete license text to the affected
+		portions.
+	configure.in cfgfile.c:
+		Fixed a bug which prevented compilation under certain
+		OSes/architectures (ex.: glibc + gcc + ARM).
+		Added a Nameservers compile-time enable/disable
+		feature switch.
+	THANKS CREDITS:
+		Added 'THANKS' file. Moved pertinent data from
+		'CREDITS' to that file.
+
+17.7.2010 Daniel Mealha Cabrita
+	version 3.1.3
+	http.c:
+		Fixed authentication problems with Safari.
+	qparser.c:
+		Fixed non-POSIX behavior. Fixes problems with eglibc
+		under certain architectures.
+
+2.7.2010 Daniel Mealha Cabrita
+	version 3.1.2
+	image.c:
+		In certain circumstances image recompression used too much CPU.
+		In other cases images were not being recompressed. Fixed.
+	session.* http.c netd.c ziproxy.c:
+		Fixed stdout/stdin (old) kludge in daemon mode. Now Ziproxy
+		used proper file descriptors. Stdout/stdin/stderr are
+		properly closed in daemon mode.
+
+15.6.2010 Daniel Mealha Cabrita
+	version 3.1.1
+	ziproxy_genhtml_stats.sh:
+		Fixed "bashisms". Should work with any Bourne-like shell now.
+	netd.c:
+		Added temporary workaround for data corruption when libjasper
+		decides to send warnings in certain, rare, circumstances.
+	image.c:
+		Fixed problem with certain imagens being corrupted after
+		alpha optimization processing (RGBA/YUVA) (new bug from 3.1.0).
+		Fixed security vulnerability (heap-related) in PNG
+		decoder (new bug from 3.1.0).
+		Transparent channels were not correctly loaded in certain
+		PNG pictures, resulting in corrupted or blank images.
+		Fixed (new bug from 3.1.0).
+		PNG loader code reorganization and cleanup.
+		Misc code optimizations in image optimization routines.
+
+3.6.2010 Daniel Mealha Cabrita
+	version 3.1.0
+	image.* http.h cdetect.*:
+		Image recompression core rewritten. Improved decision-taking
+		routines.
+		Added full support for transparency (affects PNG and JP2K targets).
+		Added detection and removal of useless alpha channel (certain
+		pictures with alpha channel may be recompressed to JPEG now).
+		Added palette and transparency optimization routines (affects
+		lossless compression: PNG targets).
+		Added alpha channel support to YUV-to/from-RGB routines.
+	image.* cfgfile.*:
+		Added option to convert images to grayscale for more
+		compression.
+		Obsoleted quasi-equivalent support of providing negative
+		values in ImageQuality.
+		Added alpha channel support to rgb2gray routine.
+		New option: ConvertToGrayscale
+	README ziproxy.conf:
+		Misc updates and fixes.
+
+20.5.2010 Daniel Mealha Cabrita
+	version 3.0.1
+	image.c http.c:
+		Fixed crashes when the raw (decompressed) picture size
+		exceeds integer limits (often 32bit).
+		Added other security provisions related to
+		raw picture size.
+
+18.4.2010 Daniel Mealha Cabrita
+	version 3.0.0
+	netd.c:
+		Obsoleted "-f" CLI option (use OnlyFrom config
+		option instead).
+	CREDITS:
+		Updated acknowledgments.
+	init.d/ziproxy:
+		Example initscript now uses built-in Ziproxy
+		user and PID support.
+	README:
+		Some updating/cleanup.
+	README man/ziproxy.1 netd.c:
+		Updated manpage. Minor related updates.
+
+8.3.2010 Daniel Mealha Cabrita
+	version 2.7.9_BETA3
+	strtables.c ziproxylogtool.c:
+		Minor tweaking in the hash-generation functions, to
+		reduce the likehood of hash collisions.
+	globaldefs.h ziproxylogtool.c:
+		Added GCC-specific optimizations to ziproxylogtool,
+		giving between 5%-15% speedup.
+		Such optimizations are innocuous to other compilers.
+	log.* cfgfile.* globaldefs.h gzpipe.c http.c netd.c
+	tosmarking.* ziproxy.c:
+		Fixed logging bug which added trash to HTTP output (bug
+		introduced in 2.7.9_BETA2).
+		Added more daemon error messages to error_log.
+		Several changes and code cleanup in debug_log.
+		Access log code rewritten from scratch and simplified.
+		Eliminated several log code dependencies from other
+		parts of Ziproxy.
+		Obsoleted AccessLogUserPOV option, due to code
+		maintainability concerns and small importance of
+		that option.
+	cttables.c:
+		Crashes occured when trying to compare a NULL (absent)
+		content-type. Fixed.
+	http.c:
+		Ziproxy returned garbage to the user when receiving
+		an empty response (0 bytes, no headers), instead of
+		issuing an error message. Fixed.
+	configure.in image.c:
+		Fixed compilation errors while compiling with libpng 1.4.
+		Should still compile with not-so-old previous libpng
+		versions.
+	cfgfile.* netd.c:
+		Added support for simultaneous user connection limit.
+		New option: MaxActiveUserConnections
+	cfgfile.* netd.c txtfiletools.*:
+		Added support for PID file.
+		Legacy behavior (dumping to stdout) is maintained
+		if this feature is not used.
+		New option: PIDFile
+	cfgfile.* netd.c:
+		Obsoleted NetdTimeout and removed related code.
+	cfgfile.* gzpipe.c http.c ziproxy.c:
+		Renamed parameter "ZiproxyTimeout" to "ConnTimeout".
+		Deprecated option: ZiproxyTimeout (still functional)
+		New option: ConnTimeout
+	cfgfile.* netd.c:
+		Added security options to run daemon as different user/group.
+		New options: RunAsUser, RunAsGroup
+	cfgfile.c image.c ziproxy.c:
+		Fixed old error output messages which used stderr directly,
+		instead of the proper log subsystem.
+		This fixes situations where broken GIFs resulted in
+		corrupted HTTP response.
+	cfgfile.* netd.c:
+		Added CLI parameters to set user/group.
+	cfgfile.* netd.c:
+		Added CLI parameter to set PID file.
+	netd.c:
+		Improvements on the daemon fail routines.
+		Now avoids unnecessary daemon abortions and busy loops.
+	netd.c:
+		Killing the daemon stops all children processes too.
+		Added verbosity to certain daemon errors.
+	ziproxy.c log.*:
+		Added support for SIGTERM interception.
+		Now transfers interrupted such way as logged aswell.
+		Added 'X' flag support to AccessLog.
+	netd.c log.*:
+		Added 'daemon' subsystem to error_log.
+		Updated daemon-related messages to report accordingly.
+	netd.c:
+		Added code to remove PID file in case of daemon
+		startup failure at a later stage.
+
+3.1.2010 Daniel Mealha Cabrita
+	version 2.7.9_BETA2
+	image.c:
+		Under certain circumstances, certain PNG pictures
+		could not be decompressed. Fixed.
+		This bug affected certain architectures, such as x86-64.
+	cfgfile.c qparser.*:
+		Added support for errors informing about obsoleted
+		configuration parameters, instead of just erring
+		as if it was a mere syntax error.
+		Obsolete parameters from previous versions were added.
+	cfgfile.c qparser.*:
+		Added support for errors informing about unsupported
+		configuration parameters (eg. features disabled
+		during compilation), instead of just erring
+		as if it was a mere syntax error.
+		Added JP2K-related parameters to this list.
+	cfgfile.* log.c netd.c:
+		Obsoleted LogPipe option and removed all related code.
+	cfgfile.c log.* netd.c text.c tosmarking.h ziproxy.c:
+		Minor miscellaneous fixes. Eliminates some compiler warnings.
+	cfgfile.* http.c image.c log.* netd.c preemptdns.c text.c
+	tosmarking.c ziproxy.c:
+		Obsoleted LogFile option, replaced by DebugLog.
+		Massive log-related functions renaming (in the source code)
+		to avoid confusion between different types of logging and
+		to improve code readability in general.
+		New option: DebugLog
+	JPEG2000.ru.txt README.ru README.tools.ru
+	ziproxylogtool.ru.1 ziproxy.ru.1:
+		Removed all Russian translations, due to lack of maintainer.
+	change_tos.list:
+		Added example file for TOSMarkAsDiffURL option.
+	cfgfile.* http.c:
+		Changed content-type gzip compression matching code.
+		Now it's possible to specify any content-type instead of
+		only subtypes of "application/".
+		Deprecated option: Compressible (still functional)
+		New option: LosslessCompressCT
+	cfgfile.* log.c:
+		Renamed parameter "AccessLogFileName" to "AccessLog".
+		Deprecated option: AccessLogFileName (still functional)
+		New option: AccessLog
+	cttables.c misc.*:
+		cttables was case-sensitive, that's against
+		RFC 1049 (RFC 1341). Fixed.
+	cfgfile.* http.c:
+		Added switch for "x-" subtype prefix matching for
+		content-type lists.
+		Migrated URLReplaceDataCTList to new content-type
+		lists subsystem.
+		New options: TOSMarkAsDiffCTAlsoXST,
+		             URLReplaceDataCTListAlsoXST,
+		             LosslessCompressCTAlsoXST
+	gzpipe.* http.* image.* log.* simplelist.c text.*
+	tosmarking.* globaldefs.h:
+		Changed filesize counter from signed int (usually 32 bits,
+		even in 64-bit architectures) to a local type (defined
+		during compile time, being that	at least 64 bits).
+		The most perpectible effect is seen in logs (no longer
+		wrong, often negative, size numbers for anything > 2GB).
+		This also fixes the data size limitation (up to 2GB) in
+		cases where Content-Lenght was used such as
+		HTTP method CONNECT, URLNoProcessing.
+	gzpipe.c log.* ziproxy.c ziproxy.conf:
+		Added 'G' flag support to AccessLog.
+		Added verbosity to streaming gzip/gunzip errors in DebugLog.
+	cfgfile.c ziproxy.conf:
+		Changed default of MinUncompressedGzipStreamEval from
+		250000 (~250kB) to 10000000 (~10MB).
+		This avoids trigging of MaxUncompressedGzipRatio if
+		ISO9660 images are compressed while streaming (the
+		first MBs of ISOs are highly compressible).
+	cfgfile.c ziproxy.conf:
+		Added "application/iso9660-image" content-type as
+		compressible (losslessly), in default settings.
+	log.c globaldefs.h:
+		Changed time measurement from signed int (usually 32 bits,
+		even in 64-bit architectures) to a local type (defined
+		during compile time, being that at least 64 bits).
+		Fixes problems of time logging of long downloads (>2G
+		microseconds, or >35 minutes) which previously gave
+		wrong, often negative, times.
+	cfgfile.* image.c log.* netd.c ziproxy.conf:
+		Implemented an internal error-message handling system.
+		Added more verbosity to error/warning conditions.
+		Previously unreported errors now appear.
+		Minor fixes in cfgfile.*.
+		Some code reorganization in log.*.
+		New option: ErrorLog
+		Obsoleted option: MSIETest
+	README src/*:
+		Updated copyright year to current one.
+
+14.12.2009 Daniel Mealha Cabrita
+	version 2.7.9_BETA
+	cfgfile.* gzpipe.c http.* log.* netd.c ziproxy.*
+	cttables.* globaldefs.h misc.* tosmarking.*:
+		Added TOS support (a provision for Level 7 QOS).
+		New options: TOSMarking, TOSFlagsDefault, TOSFlagsDiff,
+			TOSMarkAsDiffURL, TOSMarkAsDiffCT,
+			TOSMarkAsDiffSizeBT.
+	ziproxy.spec:
+		Removed. Unable to maintain this file properly.
+
+29.9.2009 Daniel Mealha Cabrita
+	version 2.7.2
+	README* image.* ziproxy.* netd.* ziproxy_genhtml_stats.sh:
+		Fixed Juraj's copyright years, considering old
+		code from 2002.
+	log.* ziproxy.c:
+		LogFile timer was not properly initialized and
+		the first measurement was always wrong. Fixed.
+
+12.9.2009 Daniel Mealha Cabrita
+	version 2.7.1
+	http.c:
+		Fixed HTTP/0.9 simple response support,
+		which was broken for aeons and nobody noticed.
+	text.c:
+		Gunzipped data smaller than the compressed was
+		being treated as corruped and data was simply
+		forwarded as is.
+		But that's not necessarily true (a certain website
+		thought it was a good idea to gzip jpegs, for example)
+		and in certain cases processing was not
+		applied because of that. Fixed.
+	http.c:
+		Implemented workaround for buggy sites which send:
+		Content-Encoding: ISO-8859-1 (violates RFC 2616).
+		Fixes certain pages which appeared as binary garbage
+		in the browser.
+
+13.4.2009 Daniel Mealha Cabrita
+	version 2.7.0
+	README.ru:
+		Added note stating this documentation is
+		currently outdated.
+
+13.3.2009 Daniel Mealha Cabrita
+	version 2.6.9_BETA2
+	stats.awk:
+		Obsolete. Removed.
+	image.c:
+		Fixed a bug which caused crashes in certain,
+		rare, specific situations while compressing to
+		jp2k.
+	cfgfile.* log.c ziproxy.c:
+		Added provision for crash (signal) interception
+		and logging (see new access log flags).
+		New option: InterceptCrashes
+	image.*:
+		Renamed image retcodes to a more standard
+		and uniform naming, for	better code readability.
+	image.* cfgfile.* http.c log.* ziproxy.c:
+		Added feature against "image bomb" DoS.
+		New option: MaxUncompressedImageRatio
+	image.c:
+		Fixed bug in rgb2yuv converter. In certain cases jp2
+		pictures had some very wrong colors (like deep red turned
+		into strong pink etc).
+	cfgfile.* http.* image.c text.* txtfiletools.c ziproxy.c:
+		Obsoleted ModifySuffixes. It was buggy and lost its
+		usefulness a long ago.
+		The following config options are obsolete:
+		ModifySuffixes,	MinTextStream
+		The following files were removed:
+		cfgtest.c
+		htmlmodify.h
+		htmlmodify_jp2.l
+		htmlmodify.l
+		imgtest.c
+		Makefile
+		modifytest.c
+		Also, additional code cleanup was done.
+		Test programs were obsolete and were
+		removed (imgtest, modifytest, cfgtest)
+		and no longer are a build option.
+		Flex is no longer required for building Ziproxy.
+	cfgfile.c:
+		Preventive bugfix (did not cause problems yet).
+	cfgfile.* http.c:
+		Added support for content substitution
+		by matching URL + content-type.
+		New options: URLReplaceDataCT, URLReplaceDataCTList
+	cfgfile.* http.c:
+		Added support for URL blocking.
+		New option: URLDeny
+	http.c:
+		Added support for "ICY" SHOUTcast headers.
+		Now icecasts from such servers are playable.
+
+25.2.2009 Daniel Mealha Cabrita
+	version 2.6.9_BETA
+	cfgfile.* http.c:
+		Added support for custom 403 error pages.
+	http.* ziproxy.c:
+		Fixed the type/signedness mess with outgoing Port vars.
+		Ports >= 32768 were not accessible.
+		Non-standard HTTP/HTTPS ports (non-80/443) were not
+		accessible in big-endian architectures.
+	cfgfile.* http.* ziproxy.c:
+		Added provision for outgoing port restrictions.
+		New options: RestrictOutPortHTTP, RestrictOutPortCONNECT
+	cfgfile.c ziproxy.conf:
+		Changed JPG and JP2K default settings to (hopefully)
+		better values.
+	image.c:
+		Bug which prevented recompression to jp2k
+		when more aggressive parameters were set to
+		color components, original image was forwarded
+		instead. Fixed.
+	jp2tools.* cfgfile.*:
+		Added Lanczos component upsampler support to JP2k.
+		New option: JP2Upsampler
+	image.c:
+		Encoding/decoding jp2 images with alpha channel
+		always fails. Fixed.
+	ziproxy_genhtml_stats.sh:
+		Fixed help message.
+
+26.11.2008 Daniel Mealha Cabrita
+	version 2.6.0
+	ziproxy.ru.1 ziproxylogtool.ru.1:
+		Added Russian manpages.
+	README.tools.ru README.ru JPEG2000.ru.txt:
+		Added Russian version of text documentation.
+	http.c ziproxy.conf cfgfile.*:
+		Added support for custom 407 and 409 error
+		pages.
+	http.c:
+		Under random conditions or unrelated configuration
+		changes the pictures were not recompressed.
+		Fixed.
+	http.c embbin.h:
+		Changed from 1x1 PNG to 1x1 GIF due to smaller
+		size of the latter.
+
+2.9.2008 Daniel Mealha Cabrita
+	version 2.5.9_BETA
+	http.c cfgfile.* replace.list embbin.h:
+		Added support for data replacement using
+		a URL list.
+		New option: URLReplaceData
+	http.c auth.* log.*:
+		Now a authenticated connection also logs the
+		username alongside its IP (username@X.X.X.X).
+	ziproxy.c simplelist.* cfgfile.* bo_exception.list:
+		Added support for host exception list when
+		using the BindOutgoing option.
+		New options: BindOutgoingExList, BindOutgoingExAddr
+
+31.3.2008 Daniel Mealha Cabrita
+	version 2.5.2
+	http.c:
+		Proxy authentication would bring access denial
+		if such was not requested by Ziproxy (that means
+		unnecessary authentication).
+		Now it is simply ignored and access is normal.
+	http.c:
+		Ziproxy did not send the proper URL to the
+		server (so it failed) when connecting to another proxy
+		_and_ the client accessed Ziproxy in transparent
+		proxy mode. Fixed.
+
+10.3.2008 Daniel Mealha Cabrita
+	version 2.5.1
+	http.c:
+		Originally gzipped data, one not processable,
+		to a client which supports gzip was being loaded
+		wholly into memory then recompressed back.
+		Now it's streamed directly to the client.
+		(thus less latency)
+
+28.1.2008 Daniel Mealha Cabrita
+	version 2.5.0
+	image.c:
+		JP2 component bitdepth set as !=8 would make
+		the process crash. Fixed.
+	cfgfile.c:
+		Certain defaults were unoptimal. Fixed.
+	ziproxy.conf:
+		Reorganized example configuration file,
+		clearer to read now.
+
+16.1.2008 Daniel Mealha Cabrita
+	version 2.4.8_BETA2
+	man/*:
+		Added manpages for ziproxy and ziproxylogtools.
+	http.* ziproxy.c txtfiletools.* urltables.* qparser.c:
+                Added support for list of URLs that should not be
+                processed by Ziproxy (due to bugs/incompatibilities).
+                New option: URLNoProcessing
+	ziproxy.conf:
+		ATTENTION: Changed the default location of
+		ziproxy.conf to /etc/ziproxy/ziproxy.conf
+		(was /etc/ziproxy.conf)
+	noprocess.list:
+		Added example configuration file.
+	auth.* strtables.* urltables.* http.c:
+		Routines for (basic) authentication mostly
+		rewritten.
+		Perceptible site-effect: comments are now
+		allowed in http.passwd file.
+
+7.1.2008 Daniel Mealha Cabrita
+	version 2.4.8_BETA
+	image.c http.c cfgfile.*:
+		Added input processing for JPEG 2000 files.
+		Previously Ziproxy could only compress to that
+		format. Now it is able to recompress and
+		even convert to other formats.
+		Now it is possible to compile with JP2K support
+		and disable that through the config file.
+		New options: ProcessJP2K, ForceOutputNoJP2K, ProcessToJP2K
+	image.c:
+		Major optimizations to the existing JP2K code
+		(the compression-to-JP2K code).
+	http.c:
+		Streaming data (no Content-Length) could be prematurely
+		interrupted in certain cases. Fixed.
+	image.* http.c cfgfile.*:
+		Added support for YUV color model for JP2K files.
+		New option: JP2Colorspace
+	image.* http.c cfgfile.*:
+		Added support for component and individual component
+		resolution (bit-wise) for JP2K files.
+		New options: JP2BitResYA, JP2BitResRGBA, JP2BitResYUVA
+	image.* cfgfile.*:
+		Now JP2K compression is specified in a similar way
+		as JPG files (quality-wise, instead of rate).
+		New option: JP2ImageQuality
+		Obsoleted option: JP2Rate
+	image.* cfgfile.* jp2tools.*:
+		Added suport for component sampling.
+		New options: JP2CSamplingYA, JP2CSamplingRGBA, JP2CSamplingYUVA
+	image.* cfgfile.* http.c:
+		Added switches for selective JP2 output support.
+		New options: AnnounceJP2Capability, JP2OutRequiresExpCap
+	JPEG2000.txt:
+		Rewritten from scratch.
+
+15.12.2007 Daniel Mealha Cabrita
+        version 2.4.3
+        Special version with urgent bugfix backport.
+        This version is not present in CVS repository as is.
+        http.c:
+                Streaming data (no Content-Length) could be prematurely
+                interrupted in certain cases. Fixed.
+
+4.12.2007 Daniel Mealha Cabrita
+	version 2.4.2
+	http.c:
+		Fixed broken user pipe detection while transferring
+		unprocessed stream-to-stream.
+	ziproxy.c log.*:
+		When server breaks the connection, ziproxy immediately
+		interrupted the transfer at client's side.
+		Now it will send the remaining data to the client.
+		The previous behavior could bring premature
+		disconnections.
+	text.c:
+		Content-Length wasn't being removed while
+		stream-to-stream gunzipping. Fixed.
+	ziproxy.c log.c:
+		Ziproxy crashed when AccessLogFileName wasn't defined.
+		Fixed. This bug appeared in 2.4.1 version.
+	ziproxy.c log.*:
+		Now (debug) log provides each line with the PID of the
+		specific process servicing the specific HTTP request.
+		Previously it merely provided the base Ziproxy process,
+		what is pretty much useless in daemon mode and made
+		sense only while using (x)inetd, or in pre-1.9.0 versions.
+	http.c:
+		Stream-to-stream (no further processing) routines were
+		rewritten and are >100x times faster now. This may bring
+		noticeable difference in cases where outgoing data
+		is something like 10 Mbps or more.
+		Added access log flag 'W'.
+
+22.11.2007 Daniel Mealha Cabrita
+	version 2.4.1
+	cfgfile.* netd.c ziproxy.*:
+		New option: BindOutgoing
+	cfgfile.* http.c:
+		New option: AccessLogUserPOV
+	ziproxy.conf:
+		Added new xml types as (gzip) compressible.
+		Added 'pdf' and 'tar' as compressible application types.
+	gzpipe.c ziproxy.c http.* log.*:
+		Added access log support for interrupted/timeouted transfers.
+		Added access log flags 'Z' (timeout)
+		and 'B' (broken pipe, interrupted)
+	image.c:
+		When decompressing jpeg incomplete files, ziproxy process
+		crashes (busy loops) until it timeouts. Fixed.
+
+28.10.2007 Daniel Mealha Cabrita
+	version 2.4.0
+	http.*:
+		If data is > MaxSize, junk was appended to the beginning
+		of it. Fixed.
+		Ziproxy tried to load into memory, data types which are
+		not supposed to be processed. Fixed.
+	text.c:
+		Trivial overflow problem which gave false positives
+		for "gunzip threshold limit". Fixed.
+	qparser.c:
+		When config file was essentially empty (only comments
+		or spaces) ziproxy issues this error:
+		ERROR: Invalid parameter --> <empty>
+		Fixed.
+	gzpipe.c:
+		Fixed intermitent bug when gzip-streaming pages
+		(random numbers appeared in the body of the page, mixed
+		with the content). This bug appeared in 2.3.5_BETA.
+	cfgfile.* http.c gzpipe.*:
+		New option: MinUncompressedGzipStreamEval
+	htmlopt.* http.c fstring.* cdetect.*:
+		Added support for javascript files as text/javascript.
+		Now tests whether text/html is indeed html
+		(not always the case, may be JS, CSS...)
+		Misc fixes to html opt (support more sites now).
+
+25.10.2007 Daniel Mealha Cabrita
+	version 2.3.5_BETA
+	http.c:
+		Broken gzip were not being uncompressed (that's ok)
+		but Ziproxy attempted to recompress those again. Fixed.
+	http.c:
+		Requests were broken when in transparent proxy mode _and_
+		the client explicited the port. Fixed.
+	various_files:
+		Fixed missing includes and certain inconsistencies in the
+		source code.
+		Removed unused variables.
+		Fixed (hopefully) all pointer compares in order to use NULL
+		instead of 0.
+		Those potentially preventing compilation in
+		certain systems.
+	qparser.*:
+		Replaced libconfuse with qparser, thus that library is
+		no longer used.
+		Fixes x86_64 (and possibly other arches) parsing problems.
+	configure.in:
+		Now check all headers used in source code.
+	http.* cfgfile.*:
+		New option: WA_MSIE_FriendlyErrMsgs
+		Misc bug fixes and code cleanup.
+		MinTextStream was using the decompressed size, what is
+		senseless if the data came pre-compressed by the remote
+		server. Fixed.
+	http.*:
+		Added (limited) support for partial data download
+		(Content-Range, Range).
+		"multipart/byteranges" mode works aswell (as side effect),
+		and that's a BUG. This must be disabled later
+		since it can build corrupt data at the user's end
+		(when dealing with jpg/gif/png and htmlopt-processed files).
+	http.* text.* gzpipe.*:
+		Added gzip/gunzip stream-to-stream support. Appliable
+		when no other optimizations are requested/viable.
+		Now logs aloways report gzipped transfers new sizes
+		(previously, streaming cases were reported as "-1").
+		A number of bugs fixed related to incoming gzipped data.
+	cfgfile.c ziproxy.conf:
+		Misc updates/improvements to the example config file.
+		Changed some defaults to more sensible values.
+
+11.9.2007 Daniel Mealha Cabrita
+	version 2.3.0
+	ziproxy.c:
+		Alternative network code for IPv4-only OSes was
+		completely broken. Fixed.
+	htmlopt.c:
+		Broken commented CDATA in JS processing.
+		Some pages using htmlopt were rendered broken.
+		Fixed.
+	http.c, cfgfile.*:
+		New option: AllowMethodCONNECT
+	http.c:
+		(default) error messages now contain some
+		meaningful info at the footer of the page,
+		like date and hostname.
+	http.* text.* cfgfile.*:
+		Ziproxy now supports internal processing of
+		gzipped data.
+		Now also possible to always advertise gzip capability,
+		no longer being dependant on the http client.
+		New option: OverrideAcceptEncoding
+		New option: MaxUncompressedGzipRatio
+	http.c cfgfile.*:
+		New option: RedefineUserAgent
+	http.c cfgfile.*:
+		New option: DecompressIncomingGzipData
+		Many fixes/changes in the HTTP processing routines.
+	htmlopt.c:
+		Changed quirky-linebreak processing to be more
+		like mainstream browsers, for more correct
+		rendering of certain broken pages.
+	htmlopt.* cfgfile.* http.c:
+		Fixed bug in HTMLopt which caused losing formatation
+		in textarea.
+		New option: ProcessHTML_TEXTAREA
+	htmlopt.c:
+		Fixed bugs related to javascript processing.
+
+8.5.2007 Daniel Mealha Cabrita
+	version 2.2.2
+	http.h:
+		Some files with too many headers were not loadable
+		(typically some wikipedia.org pictures). Fixed.
+	htmlopt.c:
+		Fixed commented (escaped, in a way) CDATA XML tag
+		which was being removed.
+	http.c:
+		Fixed trailing trash in html/javascript/css
+		when code optimization is enabled.
+	ziproxylogtool.c:
+		Added internal caching
+		(about 4.5x faster in large logs now)
+	Makefile.am:
+		README.tools was left behind. Added into.
+
+18.12.2006 Daniel Mealha Cabrita
+	version 2.2.1
+	cfgfile.c:
+		Fixed compilation issues with FreeBSD
+		(possibly affecting other OSes aswell)
+	ChangeLog:
+		Removed duplicated entry from 17.12.2006
+	CREDITS:
+		Some people were left out, fixed.
+
+17.12.2006 Daniel Mealha Cabrita
+	version 2.2.0
+	cfgfile.*, ziproxy.c:
+		New option: ConventionalProxy
+	http.c:
+		Fixed: standalone javascript files were not being
+		compressed, even when GZip=true
+	cfgfile.c:
+		Fixed: AllowLookChange default was not false
+		as it should be.
+	cfgfile.*, netd.c:
+		New option: Address
+	cfgfile.c:
+		New option: Nameservers
+	netd.c:
+		Ziproxy collected zombie childs only when a new incoming
+		connection arrived, what is not very elegant when
+		Ziproxy is in idle state and one type something like
+		$ ps xa | grep ziproxy
+		Fixed.
+	http.c:
+		Fixed: Ziproxy handled incorrectly 30x HTTP responses.
+		Certain sites were inaccessible.
+	tools/*:
+		Added Ziproxy Log Tools.
+
+2.9.2006 Daniel Mealha Cabrita
+	version 2.1.1
+	text.c:
+		Fixed a compilation bug when Jasper (JP2K) is enabled.
+		(This bug was introduced in version 2.1.0)
+	cfgfile.c:
+		Changed the default behavior of ModifySuffixes (when Ziproxy
+		is compiled with Jasper) to FALSE, in order to avoid more
+		problems. (Modify Suffixes is _very_ broken).
+
+26.7.2006 Daniel Mealha Cabrita
+	version 2.1.0
+	htmlopt.*:
+		EXPERIMENTAL FEATURE:
+		Inserted htmlopt into the code, a html/css/js
+		optimizer meant to reduce file size even further
+		prior to gzip compression.
+	cfgfile.*:
+		Added options: ProcessHTML, ProcessCSS, ProcessJS
+		and ProcessHTML_*
+	http.c:
+		Fixed a bug which made PreemptNameRes to scan
+		images too, wasting cpu time.
+		Also fixed a bug which could potentially lock
+		the ziproxy process while trying to compress
+		non-pictures as pictures.
+
+29.6.2006 Daniel Mealha Cabrita
+	version 2.0.0 (final)
+	Same as 1.9.1, it seems good enough for the major
+	version bump.
+
+28.6.2006 Daniel Mealha Cabrita
+	version 1.9.1 (aka 2.0.0 beta 2)
+	http.c:
+		Fixed a bug which prevented the gzip compression of
+		short-named types (such as pdf and rtf).
+
+18.5.2006 Daniel Mealha Cabrita
+	version 1.9.0 (aka 2.0.0 beta)
+	ziproxy.c netd.c:
+		Moved log handlers to netd.c for speedup in daemon mode.
+	netd.c:
+		Wrote proper daemonize code.
+	ziproxy.spec:
+		Some minor fixes.
+	xinetd/ziproxy:
+		Updated for the new invocation procedure.
+	init.d/ziproxy:
+		Added support for a properly demonized Ziproxy.
+
+17.5.2006 Daniel Mealha Cabrita
+	ziproxy.c http.* cfgfile.*:
+		Finished access log coding.
+		Added a new config option: AccessLogFileName
+
+16.5.2006 Daniel Mealha Cabrita
+	ziproxy.conf ziproxy.* netd.c cfgfile.* http.* log.* text.c:
+		Access log support (FIXME: output only to stderr for now)
+		Added a new config option: MinTextStream
+
+13.5.2006 Daniel Mealha Cabrita
+	ziproxy.h ziproxy.c http.c http.h cfgfile.c cfgfile.h ziproxy.conf:
+		Added support for transparent proxy
+		(via the TransparentProxy option)
+	cfgfile.c cfgfile.h:
+		Changed default setting of AllowLookChange and
+		PreemptNameResBC to false
+	netd.c: fixed small code glitch
+
+12.5.2006 Daniel Mealha Cabrita
+	netd.c:
+		New code for command line parameters parsing.
+		New options, other ones are changed.
+
+7.5.2006 Daniel Mealha Cabrita
+	started version 1.9.0 development
+	ziproxy.h ziproxy.c netd.c:
+		Obsoleted netd. ziproxy and netd integrated into ziproxy.
+		Both modes of operation still supported.
+		(For 'netd', call 'ziproxy -d' instead)
+		"WhereZiproxy" option is now obsolete.
+	cfgfile.c:
+		Changed default config file location to /etc/ziproxy.conf
+
+15.11.2005 Daniel Mealha Cabrita
+	version 1.5.2
+	cfgfile.c, cfgfile.h, http.c, ziproxy.conf:
+		Added (basic) proxy authentication support.
+		Contributed by Roman Korolyov
+
+4.9.2005 Daniel Mealha Cabrita
+	version 1.5.1
+	http.c, image.c, text.c
+		Fixed some uninitialized variables.
+
+16.7.2005 Daniel Mealha Cabrita
+	version 1.5.0
+	cfgfile.c, cfgfile.h, http.c, ziproxy.conf:
+		Added new config options:
+		CustomError400, CustomError404, CustomError408,
+		CustomError500, CustomError503
+		For customization of error messages, instead of
+		using the build-in html code.
+	400.html, 404.html, 408.html, 500.html, 503.html:
+		Added example files for error messages.
+
+16.7.2005 Daniel Mealha Cabrita
+	ziproxy.c: Fixed. Ziproxy tried to connect only to the first IP
+		from a resolved hostname. Now it tries other ones too
+		(up to 16, hardcoded). Solves the problem
+		of "connection refused" which happens with few websites.
+
+8.7.2005 Daniel Mealha Cabrita
+	ziproxy.spec: Misc fixes to specfile, now more portable.
+
+5.7.2005 Daniel Mealha Cabrita
+	htmlmodify_jp2.l: fix bug which prevented compilation with JPG2k support
+
+2.7.2005 Daniel Mealha Cabrita
+	image.c: fixed transparent gif detection
+		(sometimes problems when AllowLookChange = false)
+
+27.6.2005 Daniel Mealha Cabrita
+	preemptdns.c, preemptdns.h, cfgfile.c, cfgfile.h, http.c:
+		Added a new feature: preemptive hostname resolver.
+	image.c: fixed libpng-related warnings.
+
+16.6.2005 Daniel Mealha Cabrita
+	version 1.4.0
+	http.c: fixed a bug which made ziproxy processes to hang sometimes
+	http.c, cfgfile.c, cfgfile.h: added new config options:
+		ProcessJPG, ProcessPNG, ProcessGIF
+	netd.c: bugfix/workaround, netd does not close the socket while
+		exiting. Reopening socket with SO_REUSEADDR avoids errors.
+	ziproxy.conf: improvements to example config file.
+	RPM specfile created (ziproxy.spec)
+	Misc changes to documentation.
+	Initscript created (etc/init.d/ziproxy). Uses netd.
+
+13.7.2004 Juraj Variny
+	configure.in: static link to libconfuse by default
+	ziproxy.c: don't use NextProxy for HTTPS connections
+	
+11.7.2004 Juraj Variny
+	http.c: remove extra whitespace from headers before parsing; better 
+		checking for chunked correctness; forward oversize content 
+		instead of error
+	acinclude.m4: use confuse-config to find out flags
+	
+6.1.2004 Juraj Variny
+	Makefile.am, configure.in, config/acinclude.m4: little changes to 
+		remove warnings, getting 'make dist' working.
+	
+4.1.2004 Juraj Variny
+	image.c: apply AllowLookChange option to transparent PNGs too.
+	
+29.12.2003 Juraj Variny
+	cfgfile.c, image.c: added AllowLookChange option
+	
+24.11.2003 Juraj Variny
+	version 1.3b released
+
+23.11.2003  Cheuksan Wang
+	http.c: fix a typo in forward_content which causes all POST requests
+	to fail
+
+23.11.2003 Juraj Variny
+	version 1.3 released
+	cfgfile.c: CFG_SIMPLE_BOOL sometimes sets default value to false, use 
+		CFG_BOOL instead.
+	
+22.11.2003 Juraj Variny
+	http.c: redundant code causing unwanted timeouts removed from 
+		forward_content() 	
+	cfgfile.c: subtle change to Gzip option handling
+		
+11.11.2003 Juraj Variny
+	http.c, text.c: serious bugs fixed related to gzip compression
+
+29.10.2003 Juraj Variny
+	version 1.3beta released
+	
+25.10.2003 Juraj Variny
+	image.c, text.c: fixed JP2 mode HTML modification
+	cfgfile.c, README: updated documentation to be in sync with default 
+		config values
+	JPEG2000.txt: updated installation notes
+
+19.10.2003 Juraj Variny
+	image.c: try convert to PNG only if JPEG conversion is not 
+		satisfactory enough 
+	configure.in, bootstrap, acinclude.m4: removed some bugs and 
+		incompatibilities
+	
+10.10.2003 Juraj Variny
+	Autoconfiscated (added autoconf support to) the package. Added some 
+	files for autotools, bootstrap script and changed all sources to #include config.h .
+
+09.10.2003 Juraj Variny
+	image.c: removed awful buffer overrun bug in palette reduction algorithm.
+	
+08.10.2003 Juraj Variny
+	image.c: remove unused colors from palette, alpha implementation of 
+		images caching for IMGtoOBJ, some bugfixes.
+	nearly all files: fixed/added some comments
+	
+05.10.2003 Juraj Variny
+	http.c: fixed bad http_headers initialization
+	image.c: fixed bugs in GIF decompression/PNG compression 
+		and C incompatibilities.
+	
+04.10.2003 Juraj Variny
+	image.c: enabled GIF->PNG compression, alpha channel 
+	    handling for image formats that support it (PNG, JP2)
+	htmlmodify_*.l: common code was put into text.c
+	text.c: new module, while HTML modification for JP2, server is 
+	    asked for image size and decision is made whether to add 
+	    an OBJECT tag.
+		
+25.09.2003 Juraj Variny
+	ziproxy.c, http.c: squashed some bugs from restructuring
+	
+24.09.2003 Juraj Variny
+	ziproxy.c: restructured code
+	log.c, http.c: added new modules
+	
+22.09.2003  Cheuksan Wang
+	ziproxy.conf: Comment out LogPipe to make this file compatible with
+	both netd and xinetd.
+
+09.09.2003 Cheuksan E. Wang
+	image.c: Some palette PNG images may have alpha transparancy in them.
+	Remove it so we can convert into jpeg correctly.
+	
+08.09.2003 Juraj Variny
+	htmlmodify_jp2.l: Improved HTML modification using OBJECT tags.
+	ziproxy.c, image.c: If beginning of content indicates other image 
+	    type than server does, use that type instead.
+	
+02.09.2003 Cheuksan E. Wang
+        xinetd/ziproxy: fix configuration using server_arg
+
+26.08.2003 Cheuksan E. Wang
+	ziproxy.c: If we are sending a big file down a slow line, reset
+	the alarm once a while so it won't time out in the middle.
+
+26.08.2003 Juraj Variny
+	Makefile: More friendly JP2 setup
+	
+	htmlmodify_JP2.l, cfgfile.c, ziproxy.c: Added IMG->OBJ (or -> EMBED) 
+	tag modification for JP2s. Added JP2Rate option.
+	
+	htmlmodify.l, cfgfile.c, ziproxy.c: Fixed minor bugs and made suffix 
+	modification optional. After next release should be suffix modification 
+	outside JP2 code removed.
+	
+16.08.2003 Juraj Variny
+	image.c, ziproxy.c: Added basic JPEG2000 support.
+	
+10.08.2003 Cheuksan E. Wang
+	ziproxy.c: Handle HTTP/1.0 Simple Response. 
+	
+09.08.2003 Juraj Variny
+	ziproxy.c: fixed variable declaration to be plain C compatible
+	
+	ziproxy 1.2b released
+	
+04.08.2003 Juraj Variny
+	image.c: added rgb2gray() conversion function
+	
+	ziproxy.c, imgtest.c: added call to rgb2gray()
+	in case requested quality is negative.
+	Handle zero quality.
+
+	ziproxy.c: if already began to sending data,
+	don't corrupt them by sending error headers
+	
+	cfgfile.c: accept negative ImageQuality values
+
+30.07.2003 Cheuksan E. Wang
+
+	netd.c: allow users to specify a range of IP addresses with OnlyFrom
+	
+27.07.2003 Cheuksan E. Wang
+
+	netd.c: fixed OnlyFrom error message bug 
+
+20.07.2003 Cheuksan E. Wang
+	
+	ziproxy.c: Corrected some typos. Fixed the bug related to 304 
+	response.
+	
+
+20.07.2003 Juraj Variny
+
+	cfgfile.c: added confuse 2.x support
+	
+19.07.2003 Juraj Variny
+	
+	ziproxy.c: Changed maximal header line length to 4096
+	
+	image.c: added PNG signature check into png2bitmap()
+	
+06.03.2003 Juraj Variny
+
+	ziproxy 1.2 released

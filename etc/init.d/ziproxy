@@ -1,0 +1,63 @@
+#!/bin/bash
+#
+# Startup script for Ziproxy
+#
+# chkconfig: - 86 14
+# description: Ziproxy
+
+# Copyright (c)2005-2014 Daniel Mealha Cabrita
+
+PROGNAME="Ziproxy"
+
+# source function library
+. /etc/init.d/functions
+
+rc_done="  done"
+rc_failed="  failed"
+
+return=$rc_done
+
+PID_FILE=/var/run/ziproxy.pid
+ZIPROXY=/usr/bin/ziproxy
+ZIPROXY_CONF=/etc/ziproxy/ziproxy.conf
+RUN_AS_USER=ziproxy
+
+case "$1" in
+start)
+	gprintf "Starting %s: " "${PROGNAME}"
+	${ZIPROXY} -d -u ${RUN_AS_USER} -c ${ZIPROXY_CONF} -p ${PID_FILE}
+
+	if [ $? != 0 ]; then
+		failure
+	else
+		success
+	fi
+
+	echo
+	;;
+	
+stop)
+	gprintf "Stopping %s: " "${PROGNAME}"
+
+	${ZIPROXY} -k -u ${RUN_AS_USER} -c ${ZIPROXY_CONF} -p ${PID_FILE}
+
+	if [ $? != 0 ]; then
+		failure
+	else
+		success
+	fi
+
+	echo
+	;;
+		
+restart|reload)
+        $0 stop
+        $0 start
+        ;;
+
+*)
+        gprintf "Usage: %s {start|stop|restart}\n" "${PROGNAME}"
+        exit 1
+
+esac
+

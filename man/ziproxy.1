@@ -1,0 +1,62 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH ZIPROXY 1 "April 17, 2010" ZIPROXY ZIPROXY
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage-specific macros, see man(7)
+.SH NAME
+ziproxy \- a compressing HTTP proxy server
+.SH SYNOPSIS
+.B ziproxy
+<\fB-d\fP|\fB-i\fP|\fB-k\fP> [\fB-c\fP config_file] [\fB-u\fP user_name] [\fB-g\fP group_name] [\fB-p\fP pid_filename] [\fB-h\fP]
+.SH DESCRIPTION
+.\" TeX users may be more comfortable with the \fB<whatever>\fP and
+.\" \fI<whatever>\fP escape sequences to invode bold face and italics, 
+.\" respectively.
+\fBziproxy\fP is a forwarding, non-caching and compressing HTTP proxy server. Basically it squeezes images by converting them to lower quality JPEGs and compresses (gzip) HTML and other text-like data.
+.SH OPTIONS
+These programs follow the usual GNU command line syntax, with long
+options starting with two dashes (`-').
+A summary of options is included below.
+.TP
+\fB-d\fP, \fB--daemon-mode\fP
+Used when running in standalone mode.
+.TP
+\fB-i\fP, \fB--inetd-mode\fP
+Used when running from inetd or xinetd.
+.TP
+\fB-k\fP, \fB--stop-daemon\fP
+Stops daemon.
+.TP
+\fB-c\fP, \fB--config-file\fP config_file
+Full path to ziproxy.conf file (instead of default one).
+.TP
+\fB-u\fP, \fB--user\fP user_name
+Run daemon as the specified user.
+If unspecified and user_name is specified, uses user_name's group.
+.TP
+\fB-g\fP, \fB--group\fP group_name
+Run daemon as the specified group.
+.TP
+\fB-p\fP, \fB--pid-file\fP pid_filename
+Use the specified PID file for daemon control.
+.TP
+\fB-h\fP, \fB--help\fP
+Display summarized help.
+.SH SEE ALSO
+.BR ziproxylogtool(1)
+.SH AUTHOR
+ziproxy was written by Juraj Variny and Daniel Mealha Cabrita.
+.PP
+This manual page was written by Marcos Talau <marcostalau@gmail.com>.
