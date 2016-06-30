@@ -1187,8 +1187,8 @@ In order to use Ziproxy as transparent proxy:
 
 Examples of traffic rerouting (Linux kernel >= 2.4 OSes):
 THESE ARE INCOMPLETE SCRIPTS AND DO NOT PROVIDE ANY SECURITY !!!
-
-### Requests from a local machine --> remote Ziproxy host
+```
+Requests from a local machine --> remote Ziproxy host
 $ /sbin/modprobe ip_tables
 $ /sbin/modprobe iptable_nat
 $ IPTABLES=/usr/sbin/iptables
@@ -1196,7 +1196,7 @@ $ ZIPROXY_HOST=200.56.78.90
 $ ZIPROXY_PORT=8080
 $ $IPTABLES -t nat -A OUTPUT -s 0/0 -p tcp --dport 80 -j DNAT --to ${ZIPROXY_HOST}:${ZIPROXY_PORT}
 
-### A transparent machine routing HTTP traffic AND running Ziproxy
+A transparent machine routing HTTP traffic AND running Ziproxy
 $ /sbin/modprobe ip_tables
 $ /sbin/modprobe iptable_nat
 $ IPTABLES=/usr/sbin/iptables
@@ -1204,19 +1204,19 @@ $ NET_INTERFACE=eth0
 $ ZIPROXY_HOST=200.56.78.90
 $ ZIPROXY_PORT=8080
 $ $IPTABLES -t nat -A PREROUTING -i $NET_INTERFACE -d ! $ZIPROXY_HOST -p tcp --dport 80 -j REDIRECT --to-port $ZIPROXY_PORT
-
+```
 
 
  FAQ - Frequently Asked Questions
 
-* Ziproxy is hogging my DNS!
+- Ziproxy is hogging my DNS!
 Currently Ziproxy does not have an internal name cache so, for each request
 it receives, it will try to resolve the hostname.
 If your Ziproxy instance serves many users it may be a problem indeed.
 You may solve this simply installing a local name cache
 (a simple one - not a full DNS - will suffice).
 
-* The pictures seem to come somewhat slower, specially with
+- The pictures seem to come somewhat slower, specially with
   high-latency links.
 Currently Ziproxy does not support persistent HTTP connections.
 While this doesn't usually hurt WAN acceleration, single clients per link
@@ -1226,20 +1226,20 @@ A workaround is to increase the maximum simultaneous connections per proxy
 and to disable pipelining and keep-alive. Firefox is one browser which
 supports such settings.
 
-* Will Ziproxy ever cache pages? What if I need caching aswell?
+- Will Ziproxy ever cache pages? What if I need caching aswell?
 There are no plans for such feature.
 You may chain a caching proxy (such as Squid) to Ziproxy in order to have
 such capability.
 
-* Why is Ziproxy not gzipping text/html files sent to Squid?
+- Why is Ziproxy not gzipping text/html files sent to Squid?
 Squid does not support gzip. Ziproxy detects that and does not gzip
 data sent to Squid.
 You may chain another Ziproxy (where appropriate) in order to "add"
 gzip capability to Squid.
 
-* Chaining Squid to Ziproxy does not work or it behaves strange.
+- Chaining Squid to Ziproxy does not work or it behaves strange.
 Configure /etc/squid/squid.conf as follows:
---------------->8-----------------------
+```
 # "Hooks" Squid to Ziproxy running in 'localhost', port '8081'.
 # Note: Ziproxy does not support ICP nor cache querying
 # since it is not a caching proxy.
@@ -1250,23 +1250,23 @@ cache_peer localhost parent 8081 0 no-query no-digest
 # otherwise you won't know whether Ziproxy is down/has_problems
 # (the lack of gzip support is not obvious to the user).
 never_direct allow all
---------------->8-----------------------
+'''
 Note: The other way around (Ziproxy to Squid) requires no special configuration.
 
-* The pictures look awful after compression!
+- The pictures look awful after compression!
 Ziproxy recompresses the pictures in order to reduce their sizes, naturally
 some quality loss is expected.
 You may customize the quality settings in order to match your taste.
 Also, you may try using JPEG 2000 instead of conventional JPEG for better
 quality.
 
-* Can I run Ziproxy in a 16MB RAM 66Mhz MIPS-based router?
+- Can I run Ziproxy in a 16MB RAM 66Mhz MIPS-based router?
   (or some limited hardware like that)
 If it runs an unix-ish OS, most probably you can (and some people do!).
 Although Ziproxy is quite optimized, it cannot do miracles with slow hardware.
 Please have reasonable expectations.
 
-* Does Ziproxy provide QoS / traffic shaping?
+- Does Ziproxy provide QoS / traffic shaping?
 Ziproxy does provide ToS marking based on certain HTTP characteristics of
 each request. It's an optional feature, you must enable and configure that.
 ToS marking alone does nothing, though. You'll need routers and/or servers
