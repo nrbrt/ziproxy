@@ -1250,7 +1250,7 @@ cache_peer localhost parent 8081 0 no-query no-digest
 # otherwise you won't know whether Ziproxy is down/has_problems
 # (the lack of gzip support is not obvious to the user).
 never_direct allow all
-'''
+```
 Note: The other way around (Ziproxy to Squid) requires no special configuration.
 
 - The pictures look awful after compression!
